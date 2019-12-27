@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style>
+  body{
+  	background-color:white;
+  }
+  a,a:visit,a:link,a:active {
+  	color:black;
+  	text-decoration:none;
+  } 
+  a{
+  color:black;
+  }
+  a:hover{
+  	color:black;
+  	text-decoration:none;
+  }
+  .upmagin{
+  margin:5px 0;
+  }
+  input[type=submit]{
+  	background-color:white;
+  	border:1px solid black;
+  }
+</style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}">...</div>
+
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="/">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" class="upmagin" value="Upload" /></td></tr>
+        </table>
+        
+    </form>
+</div>
+
+<div>    
+    <table border="1" class="table table-bordered">
+    <thead>
+    <tr>
+
+        <td>Name</td>
+        <td>ID</td>
+        <td>contentType</td>
+        <td>size</td>
+        <td>uploadDate</td>
+        <td>md5</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${files.size()} eq 0">
+        <td colspan="3">没有文件信息！！</td>
+    </tr>
+    <tr th:each="file : ${files}">
+        <td><a th:href="'files/'+${file.id}" th:text="${file.name}" /></td>
+        <td th:text="${file.id}" ></td>
+        <td th:text="${file.contentType}" ></td>
+        <td th:text="${file.size}" ></td>
+        <td th:text="${file.uploadDate}" ></td>
+        <td th:text="${file.md5}" ></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">...</div>
+</body>
+</html>
